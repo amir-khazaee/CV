@@ -1,0 +1,25 @@
+name: Linters
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Hadolint (Dockerfile linter)
+      uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: .devcontainer/texlive.Dockerfile
+      continue-on-error: true
+ 
+    - name: Setup Terraform 
+      uses: hashicorp/setup-terraform@v3
+    
+    - name: Terraform linter
+      run: terraform fmt -check
+      working-directory: ./terraform
