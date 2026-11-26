@@ -4,5 +4,8 @@
 *.blg
 *.log
 *.out
+.latex.out/
+src/fa-html/page*.png
+*.pdf
 terraform/.terraform.lock.hcl
 terraform/.terraform/

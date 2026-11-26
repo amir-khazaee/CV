@@ -12,3 +12,8 @@ FROM texlive/texlive:latest-minimal
 WORKDIR /usr/src
 
 
+# Install LaTeX packages -------------------------------------------------------- #
+RUN tlmgr install                                                                \
+      latex-bin collection-latexrecommended                                      \
+      titlesec enumitem subfiles lastpage fancyhdr outline import                \
+ && tlmgr path add

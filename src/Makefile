@@ -6,6 +6,8 @@ CV_SHORT_EN     := en
 CV_SHORT_EN_TEX := short-$(CV_SHORT_EN).tex
 CV_SHORT_EN_PDF := $(OUTPUT_PREFIX)$(CV_SHORT_EN).pdf
 
+CV_SHORT_FA_HTML := fa-html/resume.html
+
 TEX := $(shell find ./ -type f -name "*.tex")
 CLS := $(shell find ./ -type f -name "*.cls")
 BIB := $(shell find ./ -type f -name "*.bib")
@@ -34,6 +36,13 @@ LATEX := python3 ./bin/latexrun --color auto --bibtex-args="-min-crossrefs=9000"
 
 $(CV_SHORT_EN_PDF): $(PAPER_DEPS)
 	$(LATEX) $(CV_SHORT_EN_TEX) -O .latex.out -o $@
+
+# The Persian CV is an HTML page printed to PDF with headless Chrome.
+# Run on macOS (outside the LaTeX container): make fa
+.PHONY: fa
+fa: $(CV_SHORT_FA_HTML)
+	./fa-html/build.sh $(CV_SHORT_FA_HTML)
+	cp fa-html/resume.pdf "$(OUTPUT_PREFIX)fa.pdf"
 
 $(CV_SHORT_DE_PDF): $(PAPER_DEPS)
 	$(LATEX) $(CV_SHORT_DE_TEX) -O .latex.out -o $@
